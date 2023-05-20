@@ -1,4 +1,4 @@
-import { useState , useEffect } from 'react'
+import React , { useState , useEffect } from 'react'
 import './App.css';
 import { AiTwotoneDelete, AiTwotoneEdit, AiFillCloseCircle } from 'react-icons/ai';
 import toast, { Toaster } from 'react-hot-toast';
@@ -6,11 +6,16 @@ import { format } from 'date-fns';
 
 // let todaArr = [];
 function App() {
-  const [todoList, setTodoList] = useState((localStorage.getItem('todoData') != null) ? JSON.parse(localStorage.getItem('todoData')) : []);
+  const [todoList, setTodoList] = useState((localStorage.getItem('todoData') != null && JSON.parse(localStorage.getItem('todoData')).length != 0) ? JSON.parse(localStorage.getItem('todoData')) : []);
+  const [FormTodoData, setFormTodoData] = useState({
+    todoTitle: "",
+    todoType: "incomplete",
+    time: ""
+  });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
-  
   const [filter,setFilter] = useState('All');
 
   const handleModalOpen = () => {
@@ -34,11 +39,6 @@ function App() {
     setEditModalOpen(false);
   }
 
-  const [FormTodoData, setFormTodoData] = useState({
-    todoTitle: "",
-    todoType: "incomplete",
-    time: ""
-  });
 
   function handleFormChange(e) {
     const name = e.target.name;
@@ -128,8 +128,8 @@ function App() {
       <div className='container'>
         <p className="heading">TODO List</p>
         <div className='appButtonsWrapper'>
-          <button type="button" className='appButton' onClick={handleModalOpen}>Add Task</button>
-          <select className='appSelector' id='taskStatusSelector' onChange={handleFilter}>
+          <button type="button" className='appButton' onClick={() => handleModalOpen()}>Add Task</button>
+          <select className='appSelector' id='taskStatusSelector' onChange={(e) => handleFilter(e)}>
             <option value="All">All</option>
             <option value="incomplete">Incomplete</option>
             <option value="complete">Completed</option>

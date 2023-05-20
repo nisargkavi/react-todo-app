@@ -38,7 +38,14 @@
 }
 
 .appButton:active {
+  outline: none;
+  box-shadow: none;
   transform: scale(0.98);
+}
+
+.appButton:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 .appButton.appTheme {
