@@ -61,7 +61,7 @@ function App() {
     setFormTodoData({
       todoTitle: todoTitle,
       todoType: todoType,
-      time: new Date().toLocaleString(),
+      time: new Date(),
     });
   }
   const handleEditModalClose = () => {
@@ -75,7 +75,7 @@ function App() {
     setFormTodoData((todoData) => ({
       ...todoData,
       [name]: value,
-      time: new Date().toLocaleString(),
+      time: new Date(),
     }));
   }
 
