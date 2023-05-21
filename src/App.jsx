@@ -2,10 +2,9 @@ import React , { useState , useEffect } from 'react'
 import './App.css';
 import { AiTwotoneDelete, AiTwotoneEdit, AiFillCloseCircle } from 'react-icons/ai';
 import toast, { Toaster } from 'react-hot-toast';
-import { format } from 'date-fns';
 
-function getCurrentDate(currentDate) {
-  // const currentDate = currentDate;
+function getCurrentDate(date) {
+  const currentDate = new Date(date);
 
   // Get hours in 12-hour format
   let hours = currentDate.getHours();
@@ -179,7 +178,7 @@ function App() {
                   <div>
                     {todoItem.todoType == 'complete' ? <p className="todoTitle completed">{todoItem.todoTitle}</p> : <p className="todoTitle">{todoItem.todoTitle}</p>}
                     {/* <p className="todoTime">{format(new Date(todoItem.time), 'p, MM/dd/yyyy')}</p> */}
-                    <p className="todoTime">{getCurrentDate(new Date(todoItem.time))}</p>
+                    <p className="todoTime">{getCurrentDate(todoItem.time)}</p>
                   </div>
                 </div>
               </div>
