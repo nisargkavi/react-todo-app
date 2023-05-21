@@ -4,9 +4,39 @@ import { AiTwotoneDelete, AiTwotoneEdit, AiFillCloseCircle } from 'react-icons/a
 import toast, { Toaster } from 'react-hot-toast';
 import { format } from 'date-fns';
 
-// let todaArr = [];
+function getCurrentDate(currentDate) {
+  // const currentDate = currentDate;
+
+  // Get hours in 12-hour format
+  let hours = currentDate.getHours();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours %= 12;
+  hours = hours || 12; // 0 should be converted to 12
+
+  // Get minutes and pad with leading zero if necessary
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+
+  // Get month, day, and year
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const year = currentDate.getFullYear();
+
+  // Combine the components into the desired format
+  const formattedDate = `${hours}:${minutes} ${ampm}, ${month}/${day}/${year}`;
+
+  return formattedDate;
+}
+
 function App() {
-  const [todoList, setTodoList] = useState((localStorage.getItem('todoData') != null && JSON.parse(localStorage.getItem('todoData')).length != 0) ? JSON.parse(localStorage.getItem('todoData')) : []);
+  const getLocalStorage = () => {
+    let list = JSON.parse(localStorage.getItem('todoData'));
+    if(list) {
+      return list;
+    } else {
+      return [];
+    }
+  }
+  const [todoList, setTodoList] = useState(getLocalStorage());
   const [FormTodoData, setFormTodoData] = useState({
     todoTitle: "",
     todoType: "incomplete",
@@ -148,7 +178,8 @@ function App() {
                   </svg>
                   <div>
                     {todoItem.todoType == 'complete' ? <p className="todoTitle completed">{todoItem.todoTitle}</p> : <p className="todoTitle">{todoItem.todoTitle}</p>}
-                    <p className="todoTime">{format(new Date(todoItem.time), 'p, MM/dd/yyyy')}</p>
+                    {/* <p className="todoTime">{format(new Date(todoItem.time), 'p, MM/dd/yyyy')}</p> */}
+                    <p className="todoTime">{getCurrentDate(new Date(todoItem.time))}</p>
                   </div>
                 </div>
               </div>
